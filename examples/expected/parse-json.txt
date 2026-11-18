@@ -1,0 +1,25 @@
+$ eml-stencil parse examples/northwind.template.json examples/mail/northwind-1.eml
+[
+  {
+    "file": "examples/mail/northwind-1.eml",
+    "status": "ok",
+    "fields": {
+      "order_id": "NW-10482",
+      "placed": "November 3, 2026",
+      "items": [
+        "2 x Ethiopia Guji, whole bean, 250 g  $36.00"
+      ],
+      "discount_code": null,
+      "total": "$40.95",
+      "card_last4": "1141",
+      "ship_to": [
+        "Jane Alvarez",
+        "88 Linden Street, Apt 4B",
+        "Brooklyn, NY 11211",
+        "United States"
+      ],
+      "gift_note": null
+    }
+  }
+]
+[exit 0]

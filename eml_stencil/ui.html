@@ -10,7 +10,7 @@
   header { padding: 10px 16px; border-bottom: 1px solid var(--line); display: flex; gap: 16px; align-items: baseline; flex-wrap: wrap; }
   header b { font-size: 15px; }
   header span { color: var(--muted); }
-  main { display: grid; grid-template-columns: minmax(0, 1fr) 420px; height: calc(100vh - 44px); }
+  main { display: grid; grid-template-columns: minmax(0, 1fr) 540px; height: calc(100vh - 44px); }
   #left { overflow: auto; border-right: 1px solid var(--line); display: flex; }
   #gutter, #doc { margin: 0; padding: 12px 10px; font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; white-space: pre; }
   #gutter { color: #a1a1aa; text-align: right; user-select: none; border-right: 1px solid var(--line); background: #fafafa; }
@@ -33,7 +33,7 @@
   .field textarea { width: 100%; font: 12px/1.4 ui-monospace, monospace; border: 1px solid #d4d4d8; border-radius: 6px; padding: 6px; }
   .tag { font-size: 11px; color: var(--muted); margin-left: 6px; }
   table { border-collapse: collapse; width: 100%; font-size: 12px; }
-  td, th { border-bottom: 1px solid var(--line); padding: 4px 6px; text-align: left; vertical-align: top; }
+  td, th { border-bottom: 1px solid var(--line); padding: 4px 6px; text-align: left; vertical-align: top; white-space: pre-wrap; }
   td.miss { color: var(--bad); }
   .status-ok { color: var(--ok); } .status-partial, .status-error { color: var(--bad); } .status-skipped { color: var(--muted); }
 </style>
@@ -212,7 +212,7 @@ $("preview").onclick = async () => {
         if (r.status === "skipped" || r.status === "error") { td.textContent = ""; continue; }
         const v = r.fields[name];
         const why = r.missing && r.missing[name];
-        td.textContent = why ? "✗ " + why : show(v);
+        td.textContent = why ? "✗ " + why : (Array.isArray(v) ? v.join("\n") : show(v));
         if (why) td.className = "miss";
       }
     }

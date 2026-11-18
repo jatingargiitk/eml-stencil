@@ -1,0 +1,14 @@
+$ eml-stencil add examples/parcelly.template.json examples/mail/parcelly-1.eml --field tracking --text PX4419027785 --occurrence 2
+tracking: {"type": "after", "label": "Tracking number |", "line_start": true}
+  PX4419027785
+[exit 0]
+$ eml-stencil add examples/parcelly.template.json examples/mail/parcelly-1.eml --field eta --text 'Friday, November 6'
+eta: {"type": "after", "label": "Estimated delivery |", "line_start": true}
+  Friday, November 6
+[exit 0]
+$ eml-stencil add examples/parcelly.template.json examples/mail/parcelly-1.eml --field history --lines 13-15
+history: {"type": "below", "anchor": "Tracking history", "lines": "block"}
+  - Nov 4, 10:12 | Label created
+  - Nov 4, 17:55 | Picked up in Portland, OR
+  - Nov 4, 23:08 | Departed Parcelly hub
+[exit 0]

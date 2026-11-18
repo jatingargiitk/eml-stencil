@@ -1,0 +1,33 @@
+{
+  "name": "parcelly",
+  "view": "html",
+  "match": {
+    "from": "no-reply@parcelly.example"
+  },
+  "fields": [
+    {
+      "name": "tracking",
+      "rule": {
+        "type": "after",
+        "label": "Tracking number |",
+        "line_start": true
+      }
+    },
+    {
+      "name": "eta",
+      "rule": {
+        "type": "after",
+        "label": "Estimated delivery |",
+        "line_start": true
+      }
+    },
+    {
+      "name": "history",
+      "rule": {
+        "type": "below",
+        "anchor": "Tracking history",
+        "lines": "block"
+      }
+    }
+  ]
+}

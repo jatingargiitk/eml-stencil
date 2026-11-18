@@ -1,0 +1,20 @@
+$ eml-stencil show examples/mail/parcelly-1.eml
+# examples/mail/parcelly-1.eml (html body)
+ 1  Subject: Your parcel PX4419027785 is on its way
+ 2  From: Parcelly <no-reply@parcelly.example>
+ 3  To: jane@example.com
+ 4  Date: Wed, 04 Nov 2026 18:30:00 +0000
+ 5
+ 6  Good news, Jane!
+ 7  Your parcel from Portland, OR has left our hub and is on its way.
+ 8  Tracking number | PX4419027785
+ 9  Carrier | Coastline Express
+10  Estimated delivery | Friday, November 6
+11
+12  Tracking history
+13  Nov 4, 10:12 | Label created
+14  Nov 4, 17:55 | Picked up in Portland, OR
+15  Nov 4, 23:08 | Departed Parcelly hub
+16
+17  You’re receiving this because you have a parcel with Parcelly. Manage notifications at https://parcelly.example/settings
+[exit 0]

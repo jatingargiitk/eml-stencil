@@ -1,0 +1,38 @@
+$ eml-stencil show examples/mail/northwind-2.eml
+# examples/mail/northwind-2.eml (plain body)
+ 1  Subject: Your Northwind order #NW-10517 is confirmed
+ 2  From: Northwind Coffee <orders@northwind.example>
+ 3  To: marcus@example.com
+ 4  Date: Sat, 07 Nov 2026 16:02:45 +0000
+ 5
+ 6  Hi Marcus,
+ 7
+ 8  Thanks for your order! We're roasting it now and will email you when it ships.
+ 9
+10  Order number: NW-10517
+11  Placed: November 7, 2026
+12
+13  Your items:
+14    1 x House Espresso, ground (espresso), 1 kg  $42.00
+15    3 x Colombia Huila, whole bean, 250 g  $51.00
+16    1 x Ceramic pour-over dripper  $24.00
+17
+18  Subtotal: $117.00
+19  Discount (WELCOME10): -$11.70
+20  Shipping: $0.00
+21  Total charged: $105.30 (Visa ending 2241)
+22
+23  Shipping to:
+24  Marcus Webb
+25  Flat 2, 19 Ropemaker Road
+26  Leeds LS2 7EA
+27  United Kingdom
+28
+29  Gift note:
+30  Happy birthday, Dad! Enjoy the Huila.
+31
+32  Questions? Reply to this email or visit https://northwind.example/help.
+33
+34  --
+35  Northwind Coffee Roasters, 12 Harbour Lane, Portland, OR
+[exit 0]

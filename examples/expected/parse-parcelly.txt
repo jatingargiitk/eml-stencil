@@ -1,0 +1,3 @@
+$ eml-stencil parse examples/parcelly.template.json examples/mail/parcelly-2.eml --format jsonl
+{"file": "examples/mail/parcelly-2.eml", "status": "ok", "fields": {"tracking": "PX4419031102", "eta": "Wednesday, November 11", "history": ["Nov 8, 09:40 | Label created", "Nov 9, 06:21 | Departed Parcelly hub"]}}
+[exit 0]

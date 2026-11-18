@@ -1,0 +1,4 @@
+$ eml-stencil serve examples/northwind.template.json --port 8025 &
+POST raw emails to http://127.0.0.1:8025/parse (template northwind); Ctrl-C to stop
+$ curl -s --data-binary @examples/mail/northwind-3.eml http://127.0.0.1:8025/parse
+{"status": "ok", "fields": {"order_id": "NW-10533", "placed": "November 12, 2026", "items": ["1 x Decaf Peru, whole bean, 500 g  $29.50", "1 x Kenya Nyeri, whole bean, 250 g  $21.00"], "discount_code": null, "total": "$55.45", "card_last4": "3341", "ship_to": ["Priya Raman", "4417 Cedar Avenue", "Austin, TX 78751", "United States"], "gift_note": null}}

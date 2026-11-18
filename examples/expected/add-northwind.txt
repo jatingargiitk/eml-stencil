@@ -1,0 +1,37 @@
+$ eml-stencil add examples/northwind.template.json examples/mail/northwind-2.eml --field order_id --text NW-10517 --occurrence 2 --pattern 'NW-\d+'
+order_id: {"type": "after", "label": "Order number:", "line_start": true}
+  NW-10517
+[exit 0]
+$ eml-stencil add examples/northwind.template.json examples/mail/northwind-2.eml --field placed --text 'November 7, 2026'
+placed: {"type": "after", "label": "Placed:", "line_start": true}
+  November 7, 2026
+[exit 0]
+$ eml-stencil add examples/northwind.template.json examples/mail/northwind-2.eml --field items --lines 14-16
+items: {"type": "below", "anchor": "Your items:", "lines": "block"}
+  - 1 x House Espresso, ground (espresso), 1 kg  $42.00
+  - 3 x Colombia Huila, whole bean, 250 g  $51.00
+  - 1 x Ceramic pour-over dripper  $24.00
+[exit 0]
+$ eml-stencil add examples/northwind.template.json examples/mail/northwind-2.eml --field discount_code --text WELCOME10 --optional
+discount_code: {"type": "after", "label": "Discount (", "line_start": true, "until": ")"}
+  WELCOME10
+[exit 0]
+$ eml-stencil add examples/northwind.template.json examples/mail/northwind-2.eml --field total --text '$105.30'
+total: {"type": "after", "label": "Total charged:", "line_start": true, "until": " (Visa"}
+  $105.30
+[exit 0]
+$ eml-stencil add examples/northwind.template.json examples/mail/northwind-2.eml --field card_last4 --text 2241 --pattern '\d{4}'
+card_last4: {"type": "after", "line": "Total charged:", "label": "ending", "until": ")"}
+  2241
+[exit 0]
+$ eml-stencil add examples/northwind.template.json examples/mail/northwind-2.eml --field ship_to --lines 24-27
+ship_to: {"type": "below", "anchor": "Shipping to:", "lines": "block"}
+  - Marcus Webb
+  - Flat 2, 19 Ropemaker Road
+  - Leeds LS2 7EA
+  - United Kingdom
+[exit 0]
+$ eml-stencil add examples/northwind.template.json examples/mail/northwind-2.eml --field gift_note --text 'Happy birthday, Dad! Enjoy the Huila.' --optional
+gift_note: {"type": "below", "anchor": "Gift note:"}
+  Happy birthday, Dad! Enjoy the Huila.
+[exit 0]

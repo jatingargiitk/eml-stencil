@@ -1,0 +1,79 @@
+{
+  "name": "northwind",
+  "view": "plain",
+  "match": {
+    "from": "orders@northwind.example"
+  },
+  "fields": [
+    {
+      "name": "order_id",
+      "rule": {
+        "type": "after",
+        "label": "Order number:",
+        "line_start": true
+      },
+      "pattern": "NW-\\d+"
+    },
+    {
+      "name": "placed",
+      "rule": {
+        "type": "after",
+        "label": "Placed:",
+        "line_start": true
+      }
+    },
+    {
+      "name": "items",
+      "rule": {
+        "type": "below",
+        "anchor": "Your items:",
+        "lines": "block"
+      }
+    },
+    {
+      "name": "discount_code",
+      "rule": {
+        "type": "after",
+        "label": "Discount (",
+        "line_start": true,
+        "until": ")"
+      },
+      "required": false
+    },
+    {
+      "name": "total",
+      "rule": {
+        "type": "after",
+        "label": "Total charged:",
+        "line_start": true,
+        "until": " (Visa"
+      }
+    },
+    {
+      "name": "card_last4",
+      "rule": {
+        "type": "after",
+        "line": "Total charged:",
+        "label": "ending",
+        "until": ")"
+      },
+      "pattern": "\\d{4}"
+    },
+    {
+      "name": "ship_to",
+      "rule": {
+        "type": "below",
+        "anchor": "Shipping to:",
+        "lines": "block"
+      }
+    },
+    {
+      "name": "gift_note",
+      "rule": {
+        "type": "below",
+        "anchor": "Gift note:"
+      },
+      "required": false
+    }
+  ]
+}

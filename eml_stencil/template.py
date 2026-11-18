@@ -34,6 +34,15 @@ class TemplateError(ValueError):
 NAME_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 
 
+def name_for(path) -> str:
+    """Template name from its file name: northwind.template.json -> northwind."""
+    name = Path(path).name
+    for suffix in (".json", ".template"):
+        if name.endswith(suffix) and len(name) > len(suffix):
+            name = name[: -len(suffix)]
+    return name
+
+
 def new(name: str, view: str = "plain", sender: Optional[str] = None) -> Dict[str, Any]:
     tpl: Dict[str, Any] = {"name": name, "view": view}
     if sender:

@@ -1,0 +1,57 @@
+$ eml-stencil preview examples/northwind.template.json examples/mail
+examples/mail/newsletter.eml: skipped (sender news@northwind.example is not orders@northwind.example)
+examples/mail/northwind-1.eml: ok
+  order_id       NW-10482
+  placed         November 3, 2026
+  items          - 2 x Ethiopia Guji, whole bean, 250 g  $36.00
+  discount_code  (none)
+  total          $40.95
+  card_last4     1141
+  ship_to        - Jane Alvarez
+                 - 88 Linden Street, Apt 4B
+                 - Brooklyn, NY 11211
+                 - United States
+  gift_note      (none)
+examples/mail/northwind-2.eml: ok
+  order_id       NW-10517
+  placed         November 7, 2026
+  items          - 1 x House Espresso, ground (espresso), 1 kg  $42.00
+                 - 3 x Colombia Huila, whole bean, 250 g  $51.00
+                 - 1 x Ceramic pour-over dripper  $24.00
+  discount_code  WELCOME10
+  total          $105.30
+  card_last4     2241
+  ship_to        - Marcus Webb
+                 - Flat 2, 19 Ropemaker Road
+                 - Leeds LS2 7EA
+                 - United Kingdom
+  gift_note      Happy birthday, Dad! Enjoy the Huila.
+examples/mail/northwind-3.eml: ok
+  order_id       NW-10533
+  placed         November 12, 2026
+  items          - 1 x Decaf Peru, whole bean, 500 g  $29.50
+                 - 1 x Kenya Nyeri, whole bean, 250 g  $21.00
+  discount_code  (none)
+  total          $55.45
+  card_last4     3341
+  ship_to        - Priya Raman
+                 - 4417 Cedar Avenue
+                 - Austin, TX 78751
+                 - United States
+  gift_note      (none)
+examples/mail/northwind-4.eml: partial
+  order_id       NW-10560
+  placed         November 16, 2026
+  items          - 1 x Holiday Blend, whole bean, 1 kg  $44.00
+  discount_code  (none)
+  total          MISSING: no line starting with 'Total charged:'
+  card_last4     MISSING: no line starting with 'Total charged:'
+  ship_to        - Jane Alvarez
+                 - 88 Linden Street, Apt 4B
+                 - Brooklyn, NY 11211
+                 - United States
+  gift_note      (none)
+examples/mail/parcelly-1.eml: skipped (sender no-reply@parcelly.example is not orders@northwind.example)
+examples/mail/parcelly-2.eml: skipped (sender no-reply@parcelly.example is not orders@northwind.example)
+3 ok, 1 partial, 3 skipped, 0 error
+[exit 1]

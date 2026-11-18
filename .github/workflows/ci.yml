@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: pip install -e '.[test]'
+      - run: pytest -q -rs
+
+  ui:
+    # drives the authoring page in headless Chromium: select text, add fields, save, preview
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e '.[test]' playwright
+      - run: python -m playwright install --with-deps chromium
+      - name: browser test must not be skipped
+        shell: bash  # bash runs with -o pipefail, so a failing pytest isn't hidden by tee
+        run: pytest -q tests/test_ui_browser.py -rs | tee out.txt && ! grep -q skipped out.txt
+
+  readme-examples:
+    # re-runs every README command (and rebuilds the example templates) and checks nothing changed
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e .
+      - run: ./examples/readme_examples.sh
+      - run: git status --porcelain && git diff --exit-code examples/

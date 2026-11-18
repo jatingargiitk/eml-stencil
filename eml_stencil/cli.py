@@ -50,7 +50,7 @@ def cmd_add(args) -> int:
         doc = message.load(args.email, view=tpl.get("view", "plain"))
     else:
         doc = message.load(args.email, view=args.view)
-        tpl = template.new(tpath.stem, view=doc.view, sender=doc.sender or None)
+        tpl = template.new(template.name_for(tpath), view=doc.view, sender=doc.sender or None)
     if args.text is not None:
         start, end = infer.span_of_text(doc.text, args.text, args.occurrence)
     else:

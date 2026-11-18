@@ -1,0 +1,12 @@
+$ eml-stencil parse examples/northwind.template.json examples/mail/northwind-3.eml examples/mail/northwind-4.eml --format csv
+file,status,order_id,placed,items,discount_code,total,card_last4,ship_to,gift_note
+examples/mail/northwind-3.eml,ok,NW-10533,"November 12, 2026","1 x Decaf Peru, whole bean, 500 g  $29.50
+1 x Kenya Nyeri, whole bean, 250 g  $21.00",,$55.45,3341,"Priya Raman
+4417 Cedar Avenue
+Austin, TX 78751
+United States",
+examples/mail/northwind-4.eml,partial,NW-10560,"November 16, 2026","1 x Holiday Blend, whole bean, 1 kg  $44.00",,,,"Jane Alvarez
+88 Linden Street, Apt 4B
+Brooklyn, NY 11211
+United States",
+[exit 0]

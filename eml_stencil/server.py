@@ -69,7 +69,7 @@ class Session:
             self.template = None
         self.doc = message.load(email_path, view=view)
         if self.template is None:
-            self.template = template.new(template_path.stem, view=self.doc.view, sender=self.doc.sender or None)
+            self.template = template.new(template.name_for(template_path), view=self.doc.view, sender=self.doc.sender or None)
         self.saved = template_path.exists()
 
     def state(self) -> Dict[str, Any]:
