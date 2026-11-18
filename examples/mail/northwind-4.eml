@@ -1,0 +1,33 @@
+Subject: Your Northwind order #NW-10560 is confirmed
+From: Northwind Coffee <orders@northwind.example>
+To: jane@example.com
+Date: Mon, 16 Nov 2026 11:03:27 +0000
+Message-ID: <NW-10560@northwind.example>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+
+Hi Jane,
+
+Thanks for your order! We're roasting it now and will email you when it ships.
+
+Order number: NW-10560
+Placed: November 16, 2026
+
+Your items:
+  1 x Holiday Blend, whole bean, 1 kg  $44.00
+
+Subtotal: $44.00
+Shipping: $4.95
+Amount charged: $48.95 (Mastercard ending 0093)
+
+Shipping to:
+Jane Alvarez
+88 Linden Street, Apt 4B
+Brooklyn, NY 11211
+United States
+
+Questions? Reply to this email or visit https://northwind.example/help.
+
+-- 
+Northwind Coffee Roasters, 12 Harbour Lane, Portland, OR

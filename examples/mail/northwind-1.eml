@@ -1,0 +1,48 @@
+Subject: Your Northwind order #NW-10482 is confirmed
+From: Northwind Coffee <orders@northwind.example>
+To: jane@example.com
+Date: Tue, 03 Nov 2026 09:14:02 +0000
+Message-ID: <NW-10482@northwind.example>
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="===============0426158314584940371=="
+
+--===============0426158314584940371==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Hi Jane,
+
+Thanks for your order! We're roasting it now and will email you when it ships.
+
+Order number: NW-10482
+Placed: November 3, 2026
+
+Your items:
+  2 x Ethiopia Guji, whole bean, 250 g  $36.00
+
+Subtotal: $36.00
+Shipping: $4.95
+Total charged: $40.95 (Visa ending 1141)
+
+Shipping to:
+Jane Alvarez
+88 Linden Street, Apt 4B
+Brooklyn, NY 11211
+United States
+
+Questions? Reply to this email or visit https://northwind.example/help.
+
+-- 
+Northwind Coffee Roasters, 12 Harbour Lane, Portland, OR
+
+--===============0426158314584940371==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+<html><body><p>Hi Jane,</p><p>Order <b>NW-10482</b></p><table><tr><td>2 x Eth=
+iopia Guji, whole bean, 250 g</td><td>$36.00</td></tr></table><p>Total $40.95=
+</p></body></html>
+
+--===============0426158314584940371==--

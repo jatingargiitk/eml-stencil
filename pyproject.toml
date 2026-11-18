@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "eml-stencil"
+version = "0.1.0"
+description = "Highlight values in one example email to build an extraction template, then parse the rest of that email family to JSON/CSV. Local, no AI, no dependencies."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Jatin Garg" }]
+requires-python = ">=3.9"
+dependencies = []
+keywords = ["email", "eml", "parser", "template", "extraction", "parsio", "mailparser", "n8n"]
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Topic :: Communications :: Email",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=7"]
+
+[project.scripts]
+eml-stencil = "eml_stencil.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/jatingargiitk/eml-stencil"
+
+[tool.setuptools]
+packages = ["eml_stencil"]
+
+[tool.setuptools.package-data]
+eml_stencil = ["ui.html"]

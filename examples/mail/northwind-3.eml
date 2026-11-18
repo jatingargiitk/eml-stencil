@@ -1,0 +1,50 @@
+Subject: Your Northwind order #NW-10533 is confirmed
+From: Northwind Coffee <orders@northwind.example>
+To: priya@example.com
+Date: Thu, 12 Nov 2026 07:41:09 +0000
+Message-ID: <NW-10533@northwind.example>
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="===============1266868911333269834=="
+
+--===============1266868911333269834==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Hi Priya,
+
+Thanks for your order! We're roasting it now and will email you when it ships.
+
+Order number: NW-10533
+Placed: November 12, 2026
+
+Your items:
+  1 x Decaf Peru, whole bean, 500 g  $29.50
+  1 x Kenya Nyeri, whole bean, 250 g  $21.00
+
+Subtotal: $50.50
+Shipping: $4.95
+Total charged: $55.45 (Visa ending 3341)
+
+Shipping to:
+Priya Raman
+4417 Cedar Avenue
+Austin, TX 78751
+United States
+
+Questions? Reply to this email or visit https://northwind.example/help.
+
+-- 
+Northwind Coffee Roasters, 12 Harbour Lane, Portland, OR
+
+--===============1266868911333269834==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+<html><body><p>Hi Priya,</p><p>Order <b>NW-10533</b></p><table><tr><td>1 x De=
+caf Peru, whole bean, 500 g</td><td>$29.50</td></tr><tr><td>1 x Kenya Nyeri, =
+whole bean, 250 g</td><td>$21.00</td></tr></table><p>Total $55.45</p></body><=
+/html>
+
+--===============1266868911333269834==--

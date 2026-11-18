@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>eml-stencil</title>
+<style>
+  :root { --mark: #fff1a8; --mark-on: #ffd84d; --line: #e4e4e7; --muted: #71717a; --bad: #b42318; --ok: #067647; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; color: #18181b; }
+  header { padding: 10px 16px; border-bottom: 1px solid var(--line); display: flex; gap: 16px; align-items: baseline; flex-wrap: wrap; }
+  header b { font-size: 15px; }
+  header span { color: var(--muted); }
+  main { display: grid; grid-template-columns: minmax(0, 1fr) 420px; height: calc(100vh - 44px); }
+  #left { overflow: auto; border-right: 1px solid var(--line); display: flex; }
+  #gutter, #doc { margin: 0; padding: 12px 10px; font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; white-space: pre; }
+  #gutter { color: #a1a1aa; text-align: right; user-select: none; border-right: 1px solid var(--line); background: #fafafa; }
+  #doc { flex: 1; }
+  mark { background: var(--mark); border-radius: 2px; }
+  mark.on { background: var(--mark-on); }
+  #right { overflow: auto; padding: 12px 16px; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 18px 0 8px; }
+  label { display: block; margin: 6px 0 2px; }
+  input[type=text] { width: 100%; padding: 6px 8px; border: 1px solid #d4d4d8; border-radius: 6px; font: inherit; }
+  button { padding: 6px 12px; border: 1px solid #d4d4d8; border-radius: 6px; background: #fff; font: inherit; cursor: pointer; }
+  button.primary { background: #18181b; color: #fff; border-color: #18181b; }
+  .row { display: flex; gap: 8px; align-items: center; margin-top: 8px; flex-wrap: wrap; }
+  #selected { color: var(--muted); font-family: ui-monospace, monospace; font-size: 12px; white-space: pre-wrap; max-height: 4.5em; overflow: hidden; }
+  .msg { margin-top: 8px; color: var(--bad); white-space: pre-wrap; }
+  .field { border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; margin-bottom: 8px; }
+  .field .name { font-weight: 600; }
+  .field .value { font-family: ui-monospace, monospace; font-size: 12px; white-space: pre-wrap; margin: 4px 0; }
+  .field .problem { color: var(--bad); font-size: 12px; }
+  .field textarea { width: 100%; font: 12px/1.4 ui-monospace, monospace; border: 1px solid #d4d4d8; border-radius: 6px; padding: 6px; }
+  .tag { font-size: 11px; color: var(--muted); margin-left: 6px; }
+  table { border-collapse: collapse; width: 100%; font-size: 12px; }
+  td, th { border-bottom: 1px solid var(--line); padding: 4px 6px; text-align: left; vertical-align: top; }
+  td.miss { color: var(--bad); }
+  .status-ok { color: var(--ok); } .status-partial, .status-error { color: var(--bad); } .status-skipped { color: var(--muted); }
+</style>
+</head>
+<body>
+<header><b>eml-stencil</b><span id="email"></span><span id="savestate"></span></header>
+<main>
+  <div id="left"><pre id="gutter"></pre><pre id="doc"></pre></div>
+  <div id="right">
+    <h2>New field</h2>
+    <div>Highlight a value in the email, name it, add it.</div>
+    <div id="selected">(nothing selected)</div>
+    <label for="fname">Field name</label>
+    <input id="fname" type="text" placeholder="order_id" autocomplete="off">
+    <label for="fpattern">Value must match (optional regex)</label>
+    <input id="fpattern" type="text" placeholder="NW-\d+" autocomplete="off">
+    <div class="row">
+      <label><input id="foptional" type="checkbox"> optional (may be absent)</label>
+    </div>
+    <div class="row"><button id="add" class="primary">Add field from selection</button></div>
+    <div id="addmsg" class="msg"></div>
+
+    <h2>Fields</h2>
+    <div id="fields"></div>
+    <div class="row">
+      <button id="save" class="primary">Save template</button>
+      <span id="path" class="tag"></span>
+    </div>
+    <div id="savemsg" class="msg"></div>
+
+    <h2>Preview on samples</h2>
+    <div class="row"><button id="preview">Run on <span id="nsamples">0</span> sample(s)</button></div>
+    <div id="previewout"></div>
+  </div>
+</main>
+<script>
+"use strict";
+let state = null;
+let selection = null;  // {start, end} offsets into state.text
+
+const $ = (id) => document.getElementById(id);
+
+async function api(path, body) {
+  const opts = body === undefined ? {} : {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)};
+  const res = await fetch(path, opts);
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || res.statusText);
+  return data;
+}
+
+function show(value) {
+  if (value === null || value === undefined) return "(missing)";
+  if (Array.isArray(value)) return value.map((v) => "• " + v).join("\n");
+  return value;
+}
+
+function render() {
+  $("email").textContent = state.email + "  (" + state.view + " body)";
+  $("savestate").textContent = state.saved ? "saved" : "unsaved changes";
+  $("path").textContent = state.template_path;
+  $("nsamples").textContent = state.samples;
+
+  // document with highlights; textContent of #doc stays exactly state.text
+  const doc = $("doc");
+  doc.textContent = "";
+  const spans = state.fields.filter((f) => f.span).map((f) => ({name: f.name, s: f.span[0], e: f.span[1]}))
+    .sort((a, b) => a.s - b.s);
+  let pos = 0;
+  for (const sp of spans) {
+    if (sp.s < pos) continue;  // overlapping highlight: show the first one only
+    doc.appendChild(document.createTextNode(state.text.slice(pos, sp.s)));
+    const m = document.createElement("mark");
+    m.textContent = state.text.slice(sp.s, sp.e);
+    m.title = sp.name;
+    m.dataset.field = sp.name;
+    doc.appendChild(m);
+    pos = sp.e;
+  }
+  doc.appendChild(document.createTextNode(state.text.slice(pos)));
+  const n = state.text.split("\n").length;
+  $("gutter").textContent = Array.from({length: n}, (_, i) => i + 1).join("\n");
+
+  const list = $("fields");
+  list.textContent = "";
+  if (!state.fields.length) list.textContent = "No fields yet.";
+  for (const f of state.fields) {
+    const box = document.createElement("div");
+    box.className = "field";
+    box.dataset.field = f.name;
+    const head = document.createElement("div");
+    const nm = document.createElement("span");
+    nm.className = "name"; nm.textContent = f.name;
+    head.appendChild(nm);
+    if (!f.required) { const t = document.createElement("span"); t.className = "tag"; t.textContent = "optional"; head.appendChild(t); }
+    if (f.pattern) { const t = document.createElement("span"); t.className = "tag"; t.textContent = "pattern " + f.pattern; head.appendChild(t); }
+    box.appendChild(head);
+    const val = document.createElement("div");
+    val.className = "value"; val.textContent = show(f.value);
+    box.appendChild(val);
+    if (f.problem) { const p = document.createElement("div"); p.className = "problem"; p.textContent = f.problem; box.appendChild(p); }
+    const ta = document.createElement("textarea");
+    ta.rows = Math.min(6, JSON.stringify(f.rule, null, 1).split("\n").length);
+    ta.value = JSON.stringify(f.rule, null, 1);
+    box.appendChild(ta);
+    const row = document.createElement("div"); row.className = "row";
+    const upd = document.createElement("button"); upd.textContent = "Update rule";
+    const rm = document.createElement("button"); rm.textContent = "Remove";
+    const msg = document.createElement("div"); msg.className = "msg";
+    upd.onclick = async () => {
+      try { state = await api("/api/update", {name: f.name, rule: JSON.parse(ta.value)}); render(); }
+      catch (e) { msg.textContent = e.message; }
+    };
+    rm.onclick = async () => {
+      try { state = await api("/api/remove", {name: f.name}); render(); } catch (e) { msg.textContent = e.message; }
+    };
+    box.onmouseenter = () => document.querySelectorAll('mark[data-field="' + CSS.escape(f.name) + '"]').forEach((m) => m.classList.add("on"));
+    box.onmouseleave = () => document.querySelectorAll("mark.on").forEach((m) => m.classList.remove("on"));
+    row.appendChild(upd); row.appendChild(rm);
+    box.appendChild(row); box.appendChild(msg);
+    list.appendChild(box);
+  }
+}
+
+function offsetIn(container, node, offset) {
+  const r = document.createRange();
+  r.setStart(container, 0);
+  r.setEnd(node, offset);
+  return r.toString().length;
+}
+
+document.addEventListener("selectionchange", () => {
+  const sel = window.getSelection();
+  const doc = $("doc");
+  if (!sel.rangeCount || sel.isCollapsed) return;
+  const r = sel.getRangeAt(0);
+  if (!doc.contains(r.startContainer) || !doc.contains(r.endContainer)) return;
+  const start = offsetIn(doc, r.startContainer, r.startOffset);
+  const end = offsetIn(doc, r.endContainer, r.endOffset);
+  if (end <= start) return;
+  selection = {start, end};
+  $("selected").textContent = JSON.stringify(state.text.slice(start, end));
+});
+
+$("add").onclick = async () => {
+  $("addmsg").textContent = "";
+  if (!selection) { $("addmsg").textContent = "Highlight a value in the email first."; return; }
+  try {
+    state = await api("/api/add", {name: $("fname").value.trim(), start: selection.start, end: selection.end,
+                                    optional: $("foptional").checked, pattern: $("fpattern").value.trim()});
+    $("fname").value = ""; $("fpattern").value = ""; $("foptional").checked = false;
+    selection = null; $("selected").textContent = "(nothing selected)";
+    render();
+  } catch (e) { $("addmsg").textContent = e.message; }
+};
+
+$("save").onclick = async () => {
+  $("savemsg").textContent = "";
+  try { state = await api("/api/save", {}); render(); } catch (e) { $("savemsg").textContent = e.message; }
+};
+
+$("preview").onclick = async () => {
+  const out = $("previewout");
+  out.textContent = "running…";
+  try {
+    const data = await api("/api/preview");
+    const t = document.createElement("table");
+    const hr = t.insertRow();
+    for (const h of ["file", "status"].concat(data.fields)) { const th = document.createElement("th"); th.textContent = h; hr.appendChild(th); }
+    for (const r of data.results) {
+      const tr = t.insertRow();
+      const file = tr.insertCell(); file.textContent = r.file.split("/").pop();
+      const st = tr.insertCell(); st.textContent = r.status; st.className = "status-" + r.status;
+      if (r.reason) st.title = r.reason;
+      for (const name of data.fields) {
+        const td = tr.insertCell();
+        if (r.status === "skipped" || r.status === "error") { td.textContent = ""; continue; }
+        const v = r.fields[name];
+        const why = r.missing && r.missing[name];
+        td.textContent = why ? "✗ " + why : show(v);
+        if (why) td.className = "miss";
+      }
+    }
+    out.textContent = "";
+    out.appendChild(t);
+  } catch (e) { out.textContent = e.message; }
+};
+
+api("/api/state").then((s) => { state = s; render(); }).catch((e) => { document.body.textContent = e.message; });
+</script>
+</body>
+</html>

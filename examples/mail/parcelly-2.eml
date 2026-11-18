@@ -1,0 +1,37 @@
+Subject: Your parcel PX4419031102 is on its way
+From: Parcelly <no-reply@parcelly.example>
+To: jane@example.com
+Date: Mon, 09 Nov 2026 08:05:00 +0000
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+<!DOCTYPE html>
+<html><head><meta charset=3D"utf-8"><title>Parcelly</title>
+<style>td { font-family: Arial; } .muted { color: #888; }</style></head>
+<body>
+<table width=3D"100%" cellpadding=3D"0" cellspacing=3D"0"><tr><td align=3D"ce=
+nter">
+  <table width=3D"600" style=3D"border:1px solid #eee">
+    <tr><td><h1>Good news, Jane!</h1></td></tr>
+    <tr><td><p>Your parcel from <b>M=C3=BCnchen</b> has left our hub and is o=
+n its way.</p></td></tr>
+    <tr><td>
+      <table>
+        <tr><th align=3D"left">Tracking number</th><td>PX4419031102</td></tr>
+        <tr><th align=3D"left">Carrier</th><td>Coastline Express</td></tr>
+        <tr><th align=3D"left">Estimated delivery</th><td>Wednesday, November=
+ 11</td></tr>
+      </table>
+    </td></tr>
+    <tr><td><h2>Tracking history</h2></td></tr>
+    <tr><td><table><tr><td style=3D"padding:4px">Nov 8, 09:40</td><td style=
+=3D"padding:4px">Label created</td></tr><tr><td style=3D"padding:4px">Nov 9, =
+06:21</td><td style=3D"padding:4px">Departed Parcelly hub</td></tr></table></=
+td></tr>
+    <tr><td><p class=3D"muted">You&rsquo;re receiving this because you have a=
+ parcel with Parcelly.<br>Manage notifications at https://parcelly.example/se=
+ttings</p></td></tr>
+  </table>
+</td></tr></table>
+</body></html>

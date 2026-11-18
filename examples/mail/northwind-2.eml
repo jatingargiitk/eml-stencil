@@ -1,0 +1,56 @@
+Subject: Your Northwind order #NW-10517 is confirmed
+From: Northwind Coffee <orders@northwind.example>
+To: marcus@example.com
+Date: Sat, 07 Nov 2026 16:02:45 +0000
+Message-ID: <NW-10517@northwind.example>
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="===============2506968821049049632=="
+
+--===============2506968821049049632==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Hi Marcus,
+
+Thanks for your order! We're roasting it now and will email you when it ships.
+
+Order number: NW-10517
+Placed: November 7, 2026
+
+Your items:
+  1 x House Espresso, ground (espresso), 1 kg  $42.00
+  3 x Colombia Huila, whole bean, 250 g  $51.00
+  1 x Ceramic pour-over dripper  $24.00
+
+Subtotal: $117.00
+Discount (WELCOME10): -$11.70
+Shipping: $0.00
+Total charged: $105.30 (Visa ending 2241)
+
+Shipping to:
+Marcus Webb
+Flat 2, 19 Ropemaker Road
+Leeds LS2 7EA
+United Kingdom
+
+Gift note:
+Happy birthday, Dad! Enjoy the Huila.
+
+Questions? Reply to this email or visit https://northwind.example/help.
+
+-- 
+Northwind Coffee Roasters, 12 Harbour Lane, Portland, OR
+
+--===============2506968821049049632==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+<html><body><p>Hi Marcus,</p><p>Order <b>NW-10517</b></p><table><tr><td>1 x H=
+ouse Espresso, ground (espresso), 1 kg</td><td>$42.00</td></tr><tr><td>3 x Co=
+lombia Huila, whole bean, 250 g</td><td>$51.00</td></tr><tr><td>1 x Ceramic p=
+our-over dripper</td><td>$24.00</td></tr></table><p>Total $105.30</p></body><=
+/html>
+
+--===============2506968821049049632==--
