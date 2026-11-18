@@ -2,7 +2,7 @@
 
 Highlight the values you want in **one** example email, get a small JSON template, and parse every other email of that family (order confirmations, shipping notices, invoices, booking emails from the same sender) into JSON or CSV. It runs locally, uses no AI, and has no dependencies beyond the Python standard library.
 
-It's a local take on the highlight-to-field idea behind hosted email parsers such as Parsio and Mailparser. The template is plain JSON with readable rules, so you can check it into git, edit it by hand, and run it in a script, a cron job or an n8n HTTP step.
+It's a local take on the template-based parsing that hosted email parsers such as Parsio offer. The template is plain JSON with readable rules, so you can check it into git, edit it by hand, and run it in a script, a cron job or an n8n HTTP step.
 
 ![The authoring page: values highlighted in the example email, the rules they produced, and a preview over a folder of emails](docs/ui.png)
 
@@ -310,7 +310,7 @@ For a multi-line selection it prefers a blank-line-terminated block, then lines 
 
 ## What it doesn't do
 
-- **Fetch mail.** Point it at `.eml` files (most clients can export them, and a Maildir is `.eml` files), or POST to `serve` from whatever already receives the mail.
+- **Fetch mail.** Point it at `.eml` files (most mail clients can save messages as `.eml`). Folders are scanned for `*.eml`, but files named on the command line can be any raw message file, Maildir message files included. Or POST to `serve` from whatever already receives the mail.
 - **Attachments.** It doesn't read PDF/image attachments and doesn't do OCR.
 - **One template, many layouts.** One template is one email family. If a sender sends two different layouts, make two templates.
 - **Change detection.** Rules match text, so when a sender changes its layout the usual result is a MISSING field with a reason, not a silently wrong value. Usual, not guaranteed: a `pattern` on fields like IDs, amounts and dates catches more.
